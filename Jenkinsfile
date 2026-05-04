@@ -16,7 +16,6 @@ pipeline {
 
         stage('Run Selenium Tests') {
             steps {
-                // || true means: even if tests fail, pipeline continues to email stage
                 sh 'docker run --rm selenium-tests || true'
             }
         }
@@ -25,20 +24,21 @@ pipeline {
     post {
         always {
             emailext (
-                subject: "Test Results - Build #${BUILD_NUMBER} - ${currentBuild.result}",
+                subject: "Test Results - ${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.result}",
                 body: """
 Hi,
 
-Jenkins pipeline has finished running Selenium tests.
+Jenkins has finished running Selenium tests for the Job Portal project.
 
 Job     : ${JOB_NAME}
 Build   : #${BUILD_NUMBER}
 Status  : ${currentBuild.result}
-Link    : ${BUILD_URL}console
+Console : ${BUILD_URL}console
 
 Regards,
-Jenkins
+Jenkins CI
                 """,
+                to: "qasimalik@gmail.com",
                 recipientProviders: [
                     [$class: 'RequesterRecipientProvider'],
                     [$class: 'CulpritsRecipientProvider']
