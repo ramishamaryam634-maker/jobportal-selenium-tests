@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/ramishamaryam634-maker/jobportal-selenium-tests.git'
+                git branch: 'main', url: 'https://github.com/ramishamaryam634-maker/jobportal-selenium-tests.git'
             }
         }
 
