@@ -7,10 +7,10 @@ def test_invalid_login(driver):
 
     wait = WebDriverWait(driver, 10)
 
-    email = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='email'], input#email")))
-    password = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='password'], input#password")))
+    email = wait.until(EC.presence_of_element_located((By.NAME, "email")))
+    password = wait.until(EC.presence_of_element_located((By.NAME, "password")))
 
     email.send_keys("wrong@test.com")
     password.send_keys("wrongpass")
 
-    wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button"))).click()
+    wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']"))).click()
