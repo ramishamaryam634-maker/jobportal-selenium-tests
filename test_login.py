@@ -1,4 +1,7 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 def test_login_page_load(driver):
     driver.get("http://13.48.6.111:3000/login")
@@ -8,6 +11,17 @@ def test_login_page_load(driver):
 def test_invalid_login(driver):
     driver.get("http://13.48.6.111:3000/login")
 
-    driver.find_element(By.NAME, "email").send_keys("wrong@test.com")
-    driver.find_element(By.NAME, "password").send_keys("wrongpass")
-    driver.find_element(By.CSS_SELECTOR, "button").click()
+    email = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.NAME, "email"))
+    )
+    email.send_keys("wrong@test.com")
+
+    password = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.NAME, "password"))
+    )
+    password.send_keys("wrongpass")
+
+    button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "button"))
+    )
+    button.click()
