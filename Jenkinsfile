@@ -22,28 +22,30 @@ pipeline {
     }
 
     post {
-        always {
-            emailext(
-                subject: "Selenium Test Results - ${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
-                body: """
+    always {
+        emailext (
+            subject: "Selenium Test Results - ${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
+            body: """
 Hello Sir,
 
 Jenkins has completed execution of Selenium automated tests for the Job Portal project.
 
-Job Name      : ${JOB_NAME}
-Build Number  : ${BUILD_NUMBER}
-Build Status  : ${currentBuild.currentResult}
+Job Name     : ${JOB_NAME}
+Build Number : ${BUILD_NUMBER}
+Status       : ${currentBuild.currentResult}
 
 All 15 Selenium automated test cases were executed inside Docker container on AWS EC2.
 
-You can view the complete console output here:
+Console Output:
 ${BUILD_URL}console
 
 Regards,
 Ramisha Maryam
 """,
-                to: 'qasimalik@gmail.com'
-            )
-        }
+            to: "qasimalik@gmail.com",
+            mimeType: 'text/plain',
+            recipientProviders: []
+        )
+    }
     }
 }
