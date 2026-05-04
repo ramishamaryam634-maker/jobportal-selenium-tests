@@ -12,8 +12,9 @@ def driver():
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
 
-    # Use system chromedriver — already installed in Docker
     service = Service("/usr/bin/chromedriver")
     d = webdriver.Chrome(service=service, options=options)
+    
     yield d
+    
     d.quit()
